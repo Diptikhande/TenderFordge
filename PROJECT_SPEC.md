@@ -6,11 +6,13 @@ Multi-Agent Cognitive Platform for Automated Tender Intelligence
 
 ## Purpose
 
-TenderForge is an AI-based decision-support platform designed to
-automate the initial analysis of tender documents.
+TenderForge is a private, company-specific AI decision-support platform designed to
+evaluate tender documents that an organization has independently obtained and chosen to upload.
 
-The system allows an organization to maintain its company profile
-and upload tender documents.
+It is not a tender marketplace, public tender browsing platform, tender receiving system, or automatic tender collection system.
+
+The system allows one organization to maintain a reusable company profile
+and upload tender documents for evaluation against that profile.
 
 The system extracts and understands tender requirements, retrieves
 relevant information using Hybrid Retrieval-Augmented Generation (RAG),
