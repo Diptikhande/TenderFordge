@@ -1,0 +1,18 @@
+[client]
+# Minimal toolbar mode hides developer options and minimizes the top-right toolbar menu
+toolbarMode = "minimal"
+showErrorDetails = false
+
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true
+
+[theme]
+base = "light"
+primaryColor = "#24559a"
+backgroundColor = "#f5f7fb"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#17283f"
+font = "sans-serif"
