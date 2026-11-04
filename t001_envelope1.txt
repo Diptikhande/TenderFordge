@@ -1,0 +1,587 @@
+=== PAGE 8 ===
+Contractor                                            No of Correction                                    Executive Engineer                8 
+Inviting Tender. The Bid Data is to be prepared in the templates provided by the Tendering 
+Authority of Executive Engineer Zilla Parishad Yavatmal. The templates may be either form 
+based, extensible tables and / or uploadable documents. In the form based type of templates and 
+extensible table type of templates, the Contractors are required to enter the data and encrypt the 
+data using the Digital Certificate. 
+In the uploadable document type of templates, the Contractors are required to select the relevant 
+document / compressed file (containing multiple documents) already uploaded in the My 
+documents.   
+Notes: 
+a. 
+The Contractors upload a single document or a compressed file containing multiple 
+documents against each unloadable option. 
+b. 
+The bids are digitally signed using valid Class – II or Class – III Digital Certificate 
+issued any Certifying Authority. The Contractors are required to obtain Digital 
+Certificate in advance. 
+5. 
+Close for Bidding : 
+After the expiry of the cut – off time of Bid Preparation and bid Submission stage to be 
+completed by the Contractors has lapsed, the Tender will be closed by the Tender Authority.   
+6. 
+Shortlisting of Contractors for Financial Bidding Process: 
+The Tendering Authority will first open the Technical Bid documents of all Contractors and 
+after scrutinizing these documents will shortlist the Contractors who are eligible for Financial 
+Bidding Process. The shortlisted Contractors will be intimated by email. 
+7. 
+Opening of the Financial Bids: 
+The Contractors may remain present with the Tender Opening Authority at the time of opening 
+of Financial Bids. However, the results of the Financial Bids of all Contractors shall be available 
+on the Zilla Parishad Yavatmal e-Tendering Portal immediately after the completion of opening 
+process. 
+8. 
+Tender Schedule (Key Dates):  
+ The Contractors are strictly advised to follow the Dates and Times allocated to each stage under 
+the column “Contractor Stage” as indicated in the Time Schedule in the Detailed Tender Notice 
+for the Tender. All the online activities are time tracked and the Electronic Tendering System 
+enforces time-locks that ensure that no activity or transaction can take place outside the Start and 
+End Dates and Time of the stage as defined in the Tender Schedule .At the sole discretion of the 
+Tender Authority, the time schedule of the Tender stages may be extended 
+A) 
+ Works 
+
+
+=== PAGE 9 ===
+Contractor                                            No of Correction                                    Executive Engineer                9 
+1.4 
+ENVELOPE No. 1: 
+(Documents) 
+ 
+The first envelope “Envelope No. 1” shall contain the Scanned copies of following documents: 
+1.4.1 
+Bids MUST be accompanied with.  
+1) Contractor shall deposit Tender fees & EMD through Online Banking, RTGS/ NEFT Mode Only, No  Any Other 
+mode of payment will be accepted. 
+ 
+ 
+2) The Certificate regarding deposit of tender fees as per column No. 4 & EMD as per column No.5 through 
+Online Banking, RTGS / NEFT will be a part of E - Tendering document & process Unique Transaction 
+Registration (UTR) of the same RTGS / NEFT shall be uploaded by the tender in the Technical Bid document. 
+ 
+ 
+3) The EMD produced by the disqualified contractors in the tendering process will be refunded in the contractors 
+Bank Account within One month through RTGS / NEFT by Government Of Maharashtra e-Procurement 
+Account. 
+1.4.2 
+Registration certificate as a contractor with the Zill Parishad,Yavatmal/ Rural develepment deparment in 
+appropriate class . 
+4. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+  
+ 
+ 
+ 
+1. 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+5. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+9. 
+ 
+ 
+ 
+ 
+ 
+10. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+11. 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+12. 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Even though the bidders meet the above qualifying criteria, they are subjected to be disqualified if they have 
+
+
+=== PAGE 10 ===
+Contractor                                            No of Correction                                    Executive Engineer                10 
+made misleading or false representation in the forms statement and attachments submitted as proof of the 
+qualification requirements and / or record of post performance such as abandoning the works, not properly 
+completing the contract, in ordinate delays in completion litigation history or financial failures etc. 
+ADDITIONAL PERFORMANCE SECURIT 
+         Bank Guarantee Or Demand Draft / FDR for Additional Performance Security Deposit for Quoting Offer 
+More than 1% below the tender cost. (As Per GR. Dated 27.09.2018).& 26.11.2018 
+                    As per the directives laid down in Government Of Maharashtra,  Public Works Department, 
+Marathi Resolution No.CAT 2017/PRA.KRA 8/ Bldg-2/date. 27.09.2018  ).& 26.11.2018   If the bidder 
+intends to quote his offer below more than 1 % of the Bid cost of the department then L.1  bidder should 
+be submit a  Bank Guarantee (in the form as prescribed by Government)  Or Demand Draft Or FDR from 
+any Schedule Bank, Nationalized Bank or Any Other Bank within 8 days after opening of envelope No.2 & 
+declaration of L-1 
+A.   If L.1  Bidder quote his offer below more than 1 % unto 10 % of the estimated cost put to Bid then he 
+should submit a Bank Guarantee Or Demand Draft / FDR amounting to 1% of the Bid cost of the 
+department towards Additional Performance Security  within 8 days  as above stated  
+B)  
+If L.1 Bidder quote his offer more than 10 % below the estimated cost put to Bid  then he should submit 
+Additional Performance Security 1 % for every percent after 10 % below percentage in addition to the cost 
+of 1% Additional performance security mentioned above clause A for quoting below offer,  
+(eg. If L.1Bidder quotes his offer 14 % below the estimated cost put to bid, then he should submit 14 - 10 = 
+4 % Additional Performance security + 1% Performance security = 5 % amount of the cost put to bid as a 
+total Additional Performance Security.) 
+C)  
+If L.1 Bidder   quote his offer more than 15% below the estimated cost put to Bid then he should submit 
+double Additional Performance security for every percent After 15% Below Percentage in addition to 
+amount Stated in para A & B above  
+(eg. If L.1Bidder quotes his offer 19% Below the estimated cost put to bid, then he should submit 19% - 
+15% = 4% ; i.e. 4%x 2= 8% + 1% ( for Below 1 to 10% ) + 5% (for Below 10% to 15% ) = 14% Amount of 
+the cost put to Bid as a total Additional Performance security.  
+If the amount of Additional Performance Security as required above (under A & B & C) is not submitted 
+within  8 days after opening of envelope No.2 & declaration of L.1, then is offer will be treated as “Non 
+Responsive “ and will not be considered. 
+ 
+1)  
+Such Bank Guarantee Or Demand Draft or FDR shall strictly issued only by the Nationalized Bank or 
+Scheduled Bank in favour of the Executive Engineer, Public Works Division, Yavatmal and DD shall be 
+valid for the minimum period of three months after date of submission of the tender and  Bank Guarantee 
+shall be valid  for 24 months from date of completion of the work & extendable further in case of  extension 
+in time limit. 
+2)  
+The Bank Guarantee Or Demand Draft should bear the MICR and IFSC Code Number of the issuing bank. 
+3)  
+If it is found that the  Bank Guarantee / Demand Draft or FDR as above submitted by the tendered is false/ 
+forged then the Earnest Money submitted by such tendered shall be forfeited and his registration as a 
+contractor of Public work department will be suspended for the period of one Year. For this concerned 
+Superintending Engineer shall have the full rights. 
+4)  
+The work order to the successful contractor shall be issued only after the encashment of his Demand Draft 
+or on confirmation of Bank guarantee by the concerned Executive Engineer.  
+       Note :-  
+          for calculating the amount of ADDITIONAL PERFORMANCE SECURITY contractors offer will be 
+calculated in percentage rounded up to two decimal points only. Performance Security / Additional Performance 
+Security in the form of D.D. / F.D.R. / B.G. & E.M.D. etc. should be drawn from the bank account of bidders only 
+otherwise bid will be rejected. 
+ 
+1.5 
+ENVELOPE No. 2 TENDER   (FINANCIAL BID) 
+ 
+The second envelope “Envelope No. 2” shall contain only the main tender including the 
+Common Set of Conditions / Deviation issued by the Department after the pre-tender 
+Conference. A tender submitted without this would be considered as invalid. 
+ 
+The Tenderer should quote his offer diqitally signed in terms of percentage of estimated rates at 
+the appropriate place of tender documents  to be submitted only in Envelope No. 2 He should 
+not quote his offer any where directly or indirectly in Envelope No. 1. The contractor shall quote 
+
+
+=== PAGE 11 ===
+Contractor                                            No of Correction                                    Executive Engineer                11 
+for the work as per details given in the main tender and also based on the detailed set of 
+conditions issued / Additional stipulations made by the Department as informed to him by a 
+letter from Ad.CEO / CEO after Pre-Tender Conference. His tender shall be unconditional.  
+1.6 
+SUBMISSION OF TENDER: - 
+Procedure for submission of tender is given in various sections of home page of e-terdering 
+portal . 
+ 
+1.7 
+OPENING OF TENDERS: 
+On the date, specified in the Tender Schedule, following procedure will be adopted for opening 
+of the Tender. 
+(A) ENVELOPE No. 1 :- ( Documents ) 
+First of all Envelope No. 1 of the tender will be opened online to verify its contents as per 
+requirements. If the various documents contained in this envelope do not meet the requirements 
+of the Department, a note will be recorded accordingly by the tender opening authority and the 
+said tenderers Envelope No. 2 will not be considered for further action and the same will be 
+recorded. 
+The decision of the tender opening authority in this regard will be final and binding on the 
+contractors. 
+(B) ENVELOPE No. 2: (Financial Bid) 
+a)This envelope shall be opened online immediately after opening of Envelope No. 1, only if 
+contents of Envelope No. 1 are found to be acceptable to the Department. The tendered rates in 
+Schedule ‘B’ or percentage above/below the estimated rates shall then be read out.  in the 
+presence of bidders who remain present at the time of opening of Envelope No. 2. 
+ 
+1.8 
+EARNEST MONEY : 
+2 
+Bids MUST be accompanied with.  
+3 
+1) Contractor shall doposit  Tender fees & EMD through Online Banking, RTGS/ NEFT Mode Only, No  
+Any Other mode of payment will be accepted. 
+4 
+ 
+ 
+5 
+2) The Certificate regarding deposit of tender fees as per column No. 4 & EMD as per column No.5 
+through Online Banking, RTGS / NEFT will be a part of E - Tendering document & process Unique 
+Transaction Registration (UTR) of the same RTGS / NEFT shall be uploaded by the tender in the 
+Technical Bid document. 
+6 
+ 
+7 
+ 
+8 
+3) The EMD produced by the disqualified contractors in the tendering process will be refunded in the 
+contractors Bank Account within One month through RTGS / NEFT by Government Of Maharashtra e-
+Procurement Account. 
+9 
+ (ii)Earnest Money in the form of cheques or any other form except above will not be accepted. 
+(iii)The amount will be refunded to the unsuccessful tenderers on deciding about the acceptance or 
+otherwise of the tender. In case of successful tenderer, it will be refunded on his paying initial Security 
+Deposit and completing the tender documents in form B-1. 
+(iv) In case of Joint Venture Earnest money  in individual Capacity will not be accepted. Earnest  money, 
+Security Deposit, additional security deposit etc.  in the form of  UTR issued   in the name of  Joint 
+Venture Company  drawn by  Nationalised or Schedule  bank  having branches in Maharashtra and  
+endorsed, in the name of Executive Engineer  Works Division No. 1, Z. P. Yavatmal  for the period of 
+one year will be considered 
+ 
+1.9 A SECURITY DEPOSIT: 
+(i)The successful tenderer whose tender is accepted will have to pay Rs.66000 /-towards the 
+
+
+=== PAGE 12 ===
+Contractor                                            No of Correction                                    Executive Engineer                12 
+Security Deposit 
+Bids MUST be accompanied with.  
+1) Contractor shall doposit  Tender fees & EMD through Online Banking, RTGS/ NEFT Mode Only, No  Any 
+Other mode of payment will be accepted. 
+ 
+ 
+2) The Certificate regarding deposit of tender fees as per column No. 4 & EMD as per column No.5 through 
+Online Banking, RTGS / NEFT will be a part of E - Tendering document & process Unique Transaction 
+Registration (UTR) of the same RTGS / NEFT shall be uploaded by the tender in the Technical Bid document. 
+ 
+ 
+3) The EMD produced by the disqualified contractors in the tendering process will be refunded in the contractors 
+Bank Account within One month through RTGS / NEFT by Government Of Maharashtra e-Procurement 
+Account. 
+valid within the time limit prescribed in clause 1 of B-1 Form, agreement  till completion of 
+defect liabilities  period failing which his earnest money will be forfeited to Government. 
+(iii) In addition to the above, an amount of Rs. /- will be deducted from the running bills at 3 % 
+of value of the gross bill towards balance security deposit. This is a compulsory deduction. 
+1.9. B.  Condition for payment of Additional Security Deposit, if offer quoted by the renderersbelow than cost put to 
+tender. 
+ The contractor shall upload in Envelope No.2, a scan copy of  FCR of Nationalised Bank or Schedule 
+Bank, drawn in the name of Executive Engineer Z.P Works.Division No.1Yavatmal, as an additional 
+security deposit, if offer quoted by contractor is below than costputt tender, in the manner as specified 
+below. 
+ A)When the below percentage quoted is ranking between 1 % to 10 %, then cost of. FDR shall be 1% of 
+cost put to tender. 
+  
+ 
+B)When the below percentage quoted is more than 10 % of cost put to tender, then cost of 
+FDR shall 1 % for every percentage beyond 10 %, in addition to the amount specified as A) Amount of 
+additional security deposit can work out using following formula. 
+ 
+ 
+Additional Security Deposit =(Cost put to tender x 1/100) + (% rate quoted by contractor 
+- 10 %)x  put to tender. 
+ 
+ 
+FDR should bears MICR & IFSC code, with minimum validity period of three month from the 
+date of submission of bid.FDR. in original shall be submitted in the office of the Executive  
+ 
+ 
+Engineer within 5 working days from the date of submission in the sealed envelope with 
+name of , e.tender No & tender notice No. written over cover of envelope. 
+  
+In above process, if found submitted false documents/FDR. then E.M.D. shall be forfeited and 
+registration of the contractor shall be suspended for 1 year. For this the power is vested with The 
+ 
+ 
+ 
+ .Additional  Security Deposit  shall be extendable upto expiry of valid 
+extensions if any and as per tender conditions, it shall be refunded within  3 months after satisfactory 
+completion of the work. 
+ 
+ 
+The condition is conformity with Government Resolution dated 12.02.2016, hence  
+obligatoryand failing which the tender shall be considered as invalid and shall be rejected. 
+1.10 
+ISSUE OF FORMS: 
+ 
+Information regarding contract as well as blank tender forms can be downloaded from the 
+eTendering website free of cost as detailed in the N.I.T.  
+
+
+=== PAGE 13 ===
+Contractor                                            No of Correction                                    Executive Engineer                13 
+ 
+1.11 
+TIME LIMIT: 
+ 
+The work is to be completed within time limit as specified in the N.I.T. which shall be reckoned 
+from the date of written order for commencing the work and shall be inclusive of monsoon 
+period. 
+1.12 
+TENDER RATE: 
+ 
+No alteration in the form of tender and the schedule of tender and no additions in the scope of 
+special stipulations will be permitted. Rates quoted for the tender shall be taken as applicable for 
+all leads and lifts. 
+1.13 
+TENDER UNITS: 
+ 
+The tenderers should particularly note the units mentioned in the Schedule “B” on which the 
+rates are based. No change in the units shall be allowed. In the case of difference between the 
+rates written in figures and in words, the correct rate will be the one, which is lower of the two. 
+1.14 
+CORRECTION: 
+ 
+No corrections shall be made in the tender documents. Any corrections that are to be made shall 
+be made by crossing the incorrect portion and writing the correct portions above with the initials 
+of tenderer. 
+1.15 
+TENDER’S ACCEPTANCE : 
+ 
+Acceptance of tender will rest with Works  Committee Z.P.Yavatmal who reserves the right to 
+reject any or all tenders without assigning any reason therefor. The tenderer whose tender is 
+accepted will have to enter in to a regular B-1 agreement within 10 days of being notified to do 
+so. In case of failure on the part of Tenderer to sign the agreement within the stipulated time, the 
+earnest money paid by him shall stand forfeited to the Government and the offer of the tenderer 
+shall be considered as withdrawn by him.  
+1.16 
+CONDITIONAL TENDER : 
+ 
+The tenders who do not fulfil the condition of the notification and the general rules and 
+directions for the guidance of contractor in the agreement form or are incomplete in any respect 
+are likely to be rejected without assigning any reason therefore. 
+1.17(a) The Tenderers shall be presumed to have carefully examined the drawings, conditions and 
+specifications of the work and have fully acquainted themselves with all details of the site, the 
+conditions of rock and its joints, pattern, river, weather characteristics, labour conditions and in 
+general with all the necessary information and data pertaining to the work, prior to tendering for 
+the work. 
+1.17(b) The data whatsoever supplied by the Department along with the tender documents are meant to 
+serve only as guide for the tenderers while tendering and the Department accepts no 
+responsibility whatsoever either for the accuracy of data or for their comprehensiveness.   
+1.17(c) The quarries for extraction of metal, murum etc. provided in the sanctioned estimate are as per 
+survey conducted by the Department. The Contractor should however examine these quarries 
+and see whether full quantity of materials required for execution of the work strictly as per 
+specification are available in these source before quoting the rates. In case the materials are not 
+available due to reasons whatsoever, the contractor will have to bring the materials from any 
+other source with no extra cost to Government. The rates quoted, should therefore be for all 
+leads and lifts from wherever the materials are brought at site of work and inclusive of royalty to 
+be paid to the Revenue Department by the Contractor. 
+ 
+ 
+       
+POWER OF ATTORNEY: 
+ 
+If the tenderers are a firm or company, they should in their forwarding letter mention the names 
+
+
+=== PAGE 14 ===
+Contractor                                            No of Correction                                    Executive Engineer                14 
+of all the partners together with the name of the person who holds the power of Attorney, 
+authorizing him to conduct all transactions on behalf of the body, along with the tender.  
+1.19 
+The tenderer may, in the forwarding letter, mention any points are may wish to make clear but 
+the right is reserved to reject the same or the whole of the tender if the same becomes 
+conditional tender thereby. 
+1.20 
+The contractor or the firms tendering for the work shall inform the Department if they appoint 
+their authorized Agent on the work. 
+1.21 
+No foreign exchange will be released by the Department for the purchase of plants and 
+machinery for the work by the Contractor. 
+1.22 
+Any dues arising out of contract will be recovered from the contractor as arrears of Land 
+Revenue, if not paid amicably. Moreover, recovery of Government dues from the Contractors 
+will be affected from the payment due to the Contractor from any other Government works 
+under execution with them. 
+1.23 
+The Income Tax at 2.30 % including surcharge or percentage in force from time to time or at the 
+rate as intimated by the competent Income Tax authority shall be deducted from bill amount 
+whether measured bill, advance payment or secured advance. 
+1.24 
+The successful tenderer will be required to produce, to the satisfaction of the specified 
+concerned authority a valid concurrent license issued in his favour under the provisions of the 
+Contract Labour (Regulation and Abolition) Act 1970 for starting the work. On failure to do so, 
+the acceptance of the tender shall be liable to be withdrawn and also liable for forfeiture of the 
+earnest money. 
+ 
+1.25 
+The tenderer shall submit the list of apprentices engaged by the Contractor under Apprentice 
+Act. 
+1.26    Cess @ 1% (One percent) shall be deducted at source from every bill of the Contractor by the 
+Executive Engineer Under “ Building and Other Construction  for workers Welfare Cess Act 
+1996 
+1.27    VALIDITY PERIOD  : 
+ 
+The offer shall remain open for acceptance for minimum period of 90 days from the Date of 
+opening of Envelope No. 2 (Financial Bid) and thereafter until it is withdrawn by the contractor 
+by notice in writing duly addressed to the authority opening the tender and sent by Registered 
+Post Acknowledgment due.  
+Important points to be noted by terderer of Hotmix work 
+The use of specialized machineries for carrying out the asphalting items of works such as Automatic 
+Computer controlled Drum Mix plant of 40 to 60  MT/Hr as per clause 501.1& clause 501.3 confirming 
+of the MORT & H specifications (2001-IV th Revision), Electronic sensor paver, paver finisher, self 
+propelled mechanical pressure sprayer/ mechanical pressure sprayer etc. is obligatory. 
+The location of the drum mix plant shall be such that the quality and temperature shall be maintened as 
+per M.O.R.T.& H. specification at the time of laying of bituminous hot mix . It shall be located within 
+60 KM from farthest point of work. 
+The  contractor shall also make necessary suitable arrangement for maintaining the quality and 
+temperature  of bituminous mix by covering hot mix with thick tarpoline during conveying or thermocol 
+coating to conveying vehicle or any other suitable arrengment, so that quality and temperature will be 
+maintained as specified at the time of laying bituminous hot mix.  
+
+
+=== PAGE 15 ===
+Contractor                                            No of Correction                                    Executive Engineer                15 
+The Vibratory Roller/Static Roller shall be used for the compaction as per the description of the 
+respective items. 
+
+

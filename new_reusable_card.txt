@@ -1,0 +1,115 @@
+    cat_icon = {
+        "Financial": "💰", "Financial Requirements": "💰",
+        "Eligibility": "📋", "Company Eligibility": "📋",
+        "Experience": "🏆", "Previous Project Experience": "🏆",
+        "Technical": "⚙️", "Technical Requirements": "⚙️",
+        "Certifications": "📜", "Registrations & Certifications": "📜",
+        "Submission Document": "📄", "Declarations & Other Conditions": "📝",
+    }.get(category, "📌")
+
+    with st.container(border=True):
+        col_title, col_status = st.columns([3, 1])
+        with col_title:
+            st.markdown(f"### {cat_icon} {h(title)}")
+            st.markdown(
+                f"<span class='tf-req-tag'>{h(category)}</span> "
+                f"<span class='tf-req-tag'>{h(page_badge)}</span>",
+                unsafe_allow_html=True,
+            )
+        with col_status:
+            st.markdown(f"<span class='{css_class}'>{h(evidence_status)}</span>", unsafe_allow_html=True)
+            st.caption(state_help)
+
+        if not source_valid:
+            st.warning("The source citation is not validated. Check the quotation against the official tender document.")
+
+        badge_class = "tf-badge-mandatory" if doc_badge == "Mandatory" else "tf-badge-optional"
+        badge_html = f"<span class='{badge_class}'>{h(doc_badge)}</span>" if doc_badge in ("Mandatory", "Optional") else ""
+
+        with st.form(f"profile_requirement_{widget_id}", border=False):
+            col_info, col_docs = st.columns([1, 1], gap="large")
+            with col_info:
+                st.markdown(f"**Information Required:** {h(info_req)}")
+                errors, new_value, upload = [], value, None
+                if definition["input_type"] == "money_period":
+                    source_clause = " ".join(str(link.get("source_quotation") or link.get("requirement_text") or "")
+                                             for link in definition.get("requirements", []))
+                    period = parse_turnover_requirement(source_clause)["period"]
+                    year_count = int(period.get("years") or 3)
+                    rows = PF.turnover_rows_from_text(value) or [
+                        {"financial_year": "", "amount": None, "currency": "INR", "unit": "Crore"}
+                        for _ in range(min(max(year_count, 1), 10))]
+                    st.caption("Enter turnover figures for each financial year. Unverified until checked.")
+                    edited = st.data_editor(
+                        pd.DataFrame(rows, columns=["financial_year", "amount", "currency", "unit"]),
+                        num_rows="dynamic", hide_index=True, use_container_width=True,
+                        key=f"profile_turnover_{widget_id}",
+                        column_config={
+                            "financial_year": st.column_config.TextColumn("Financial year", help="e.g. 2024-25"),
+                            "amount": st.column_config.NumberColumn("Turnover Amount", min_value=0.0),
+                            "currency": st.column_config.SelectboxColumn("Currency", options=list(PF.CURRENCIES)),
+                            "unit": st.column_config.SelectboxColumn("Unit", options=list(PF.AMOUNT_UNITS)),
+                        })
+                elif definition["input_type"] == "years":
+                    current_years = parse_company_years(value)
+                    years = st.number_input("Years in Business / Operation", min_value=0, max_value=200, step=1,
+                                            value=int(current_years) if current_years is not None else 0,
+                                            key=f"profile_years_{widget_id}")
+                else:
+                    label, placeholder = _INPUT_HINTS.get(definition["input_type"], ("Details", ""))
+                    if definition["input_type"] == "certificate":
+                        label = "Certificate Details"
+                        placeholder = "e.g. Certificate number, issuing body, validity period"
+                    text_value = (st.text_area if definition["input_type"] in ("long_text", "document") else st.text_input)(
+                        label, value=value, placeholder=placeholder or info_req,
+                        key=f"profile_value_{widget_id}")
+
+                if value:
+                    clean_val = " ".join(str(value).split())
+                    if len(clean_val) > 80:
+                        clean_val = clean_val[:77] + "..."
+                    st.markdown(f"<div class='tf-saved-chip'><b>Saved Value:</b> {h(clean_val)}</div>", unsafe_allow_html=True)
+
+            with col_docs:
+                st.markdown(f"**Documents Required:** {badge_html} {h(doc_text)}", unsafe_allow_html=True)
+                company_pdfs, existing_document_id = [], None
+                if definition.get("document_key") or is_mandatory or doc_badge == "Optional":
+                    company_pdfs = [doc for doc in get_company_documents(user_id)
+                                    if str(doc.get("filename") or "").lower().endswith(".pdf")]
+                    if company_pdfs:
+                        existing_document_id = st.selectbox(
+                            "Attach existing company PDF (optional)", [None, *[doc["id"] for doc in company_pdfs]],
+                            format_func=lambda doc_id: "Choose a saved PDF" if doc_id is None else
+                                f"{next(doc['filename'] for doc in company_pdfs if doc['id'] == doc_id)} · existing evidence",
+                            key=f"profile_existing_doc_{widget_id}")
+                    upload_label = "Upload Supporting Document (PDF)" + (" — Mandatory" if is_mandatory else " — Optional")
+                    upload = st.file_uploader(upload_label, type=["pdf"], key=f"profile_doc_{widget_id}")
+                    st.caption("Accepted: PDF · Maximum 10 MB · Uploaded files remain unverified until reviewed.")
+
+                if documents:
+                    doc_strs = [f"{h(doc['filename'])} ({h(doc.get('verification_status') or 'unverified')})" for doc in documents]
+                    st.markdown(f"<div class='tf-saved-chip'><b>Saved File:</b> {', '.join(doc_strs)}</div>", unsafe_allow_html=True)
+
+                if st.form_submit_button("Save Response", type="primary", use_container_width=True):
+                    if definition["input_type"] == "money_period":
+                        new_value, errors = PF.format_turnover_rows(edited.to_dict("records"))
+                    elif definition["input_type"] == "years":
+                        new_value = f"{int(years)} years" if years else ""
+                    else:
+                        new_value = text_value
+                    if errors:
+                        for error in errors:
+                            st.error(error)
+                    else:
+                        try:
+                            document = ({"filename": upload.name, "content": upload.getvalue(),
+                                         "media_type": upload.type or "application/pdf"} if upload else
+                                        existing_company_pdf_payload(company_pdfs, existing_document_id))
+                            result = PF.save_field_value(user_id, definition, new_value, document)
+                            if result["value_saved"] or result["document_id"]:
+                                st.session_state[f"tf_flash_{user_id}"] = "Saved as unverified company information. It will not be treated as verified evidence."
+                                st.rerun()
+                            else:
+                                st.info("No changes to save.")
+                        except (ValueError, PermissionError, OSError) as exc:
+                            st.error(f"The company information could not be saved: {exc}")

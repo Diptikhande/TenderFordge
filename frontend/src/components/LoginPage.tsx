@@ -1,5 +1,0 @@
-import { Link } from 'react-router-dom';
-
-export function LoginPage() {
-  return <main className="login-page"><section className="login-card" aria-labelledby="login-title"><div className="brand-lockup"><div className="brand-mark">T</div><div><strong>TenderForge</strong><span>Tender Intelligence</span></div></div><h1 id="login-title">Enterprise decision support</h1><p>Access the workspace where tender opportunities are evaluated against company capabilities and evidence.</p><form className="login-form" onSubmit={(event) => event.preventDefault()}><label className="form-field">Work email<input type="email" placeholder="you@company.com" autoComplete="email" /></label><label className="form-field">Password<input type="password" placeholder="Enter your password" autoComplete="current-password" /></label><button className="primary-button w-full" type="submit">Sign in</button></form><p className="login-note">Authentication is not connected in the current application foundation. <Link className="table-action" to="/">Open workspace</Link></p></section></main>;
-}

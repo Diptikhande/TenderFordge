@@ -11,7 +11,7 @@ import queue
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from config import APP_NAME, APP_VERSION, UPLOAD_DIR
 from database import (
@@ -1486,6 +1486,8 @@ def render_profile_evidence_storage(user_id: int, profile: dict):
 def render_authenticated_workspace(user: dict):
     """Render the protected enterprise workspace scoped strictly to user."""
     user_id = user["id"]
+    # Load the signed-in user's company profile once for pages that need it.
+    profile = get_company_profile(user_id) or {}
 
     # --- Sidebar Navigation & User Info ---
     NAV_OPTIONS = [
@@ -1508,7 +1510,9 @@ def render_authenticated_workspace(user: dict):
         """, unsafe_allow_html=True)
 
         user_display_name = user.get("full_name") or "User"
-        user_initials = "".join([part[0].upper() for part in user_display_name.split()[:2]]) or "TF"
+        user_profile = get_company_profile(user_id) or {}
+        company_name = user_profile.get("company_name") or user_display_name
+        user_initials = "".join([part[0].upper() for part in (company_name or user_display_name).split()[:2]]) or "TF"
         st.markdown(f"""
         <div class="sidebar-account">
             <div class="sidebar-account-avatar">
@@ -1556,224 +1560,166 @@ def render_authenticated_workspace(user: dict):
             st.rerun()
 
     # ------------------------------------------------------------
-    # PAGE 1: 📊 Dashboard
+    # PAGE 1: 📊 Dashboard — redesigned main content only
     # ------------------------------------------------------------
     if st.session_state["current_page"] == "📊 Dashboard":
         stats = get_dashboard_stats(user_id)
-        profile = profile or get_company_profile(user_id)
         tenders_with_analysis = get_tenders_with_analysis(user_id)
         user_display_name = user.get("full_name") or "User"
-        initials = "".join(part[0].upper() for part in user_display_name.split()[:2]) or "TF"
-        active_company_name = (profile.get("company_name") if profile else None) or user.get("full_name") or "Enterprise Bidder"
+        active_company_name = profile.get("company_name") or user_display_name or "Enterprise Bidder"
+
+        # All styles are scoped to the dashboard. Sidebar and other pages stay unchanged.
+        st.markdown("""
+        <style>
+        .tf-dashboard-hero{background:linear-gradient(112deg,#10233f 0%,#173b69 64%,#1d4f91 100%);color:#fff;border-radius:20px;padding:30px 34px;margin:8px 0 25px;min-height:225px;box-shadow:0 12px 30px rgba(16,35,63,.13);position:relative;overflow:hidden}
+        .tf-dashboard-hero:after{content:"";position:absolute;width:300px;height:300px;right:13%;top:-190px;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 75px rgba(255,255,255,.02)}
+        .tf-dashboard-brand{display:flex;align-items:center;gap:11px;margin-bottom:19px;position:relative;z-index:1}
+        .tf-dashboard-mark{width:38px;height:38px;border:1px solid rgba(255,255,255,.28);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:850;color:#fff}
+        .tf-dashboard-brand-name{font-size:13px;font-weight:850;letter-spacing:2px;color:#dce9fb}
+        .tf-dashboard-hero-row{display:flex;justify-content:space-between;align-items:center;gap:25px;position:relative;z-index:1}
+        .tf-dashboard-welcome{color:#bcd4f5;font-size:13px;font-weight:650;margin-bottom:22px}
+        .tf-dashboard-title{color:#fff!important;font-size:clamp(27px,3vw,39px)!important;line-height:1.16!important;font-weight:820!important;margin:0 0 17px!important;letter-spacing:-1.1px}
+        .tf-dashboard-subtitle{color:#d4e2f5;font-size:14px;margin:0;max-width:650px}
+        .tf-dashboard-account{min-width:245px;max-width:280px;text-align:right}
+        .tf-dashboard-date{color:#d0def1;font-size:12px;margin-bottom:12px}
+        .tf-dashboard-company{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.16);border-radius:13px;padding:14px 16px;text-align:left;backdrop-filter:blur(5px)}
+        .tf-dashboard-company strong{display:block;color:#fff;font-size:13px;margin-bottom:6px;overflow-wrap:anywhere}
+        .tf-dashboard-company span{color:#c1d2e9;font-size:11px;overflow-wrap:anywhere}
+        .tf-dashboard-section{margin:8px 0 13px}
+        .tf-dashboard-section h3{color:#172033;font-size:19px;font-weight:780;margin:0 0 3px}
+        .tf-dashboard-section p{color:#667085;font-size:12px;margin:0}
+        .tf-dashboard-kpi{background:#fff;border:1px solid #e6ebf2;border-radius:15px;padding:17px 18px;min-height:119px;box-shadow:0 4px 14px rgba(16,35,63,.045);position:relative;overflow:hidden}
+        .tf-dashboard-kpi:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--kpi-accent,#2563eb)}
+        .tf-dashboard-kpi-label{color:#667085;font-size:11px;font-weight:750;letter-spacing:.65px;text-transform:uppercase}
+        .tf-dashboard-kpi-value{color:#172033;font-size:30px;line-height:1.2;font-weight:850;margin-top:10px}
+        .tf-dashboard-kpi-note{color:#98a2b3;font-size:10px;margin-top:4px}
+        .tf-dashboard-nav-card{height:100%;min-height:145px;background:#fff;border:1px solid #e6ebf2;border-radius:15px;padding:17px 17px 13px;box-shadow:0 4px 14px rgba(16,35,63,.04)}
+        .tf-dashboard-nav-title{font-size:14px;font-weight:780;color:#172033;margin-bottom:8px}
+        .tf-dashboard-nav-desc{font-size:11px;line-height:1.55;color:#667085;min-height:38px}
+        .tf-dashboard-panel{background:#fff;border:1px solid #e6ebf2;border-radius:15px;padding:8px 18px;box-shadow:0 4px 14px rgba(16,35,63,.04)}
+        .tf-dashboard-tender{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid #eef1f5}
+        .tf-dashboard-tender:last-child{border-bottom:0}
+        .tf-dashboard-tender-main{min-width:0;display:flex;align-items:center;gap:11px}
+        .tf-dashboard-pdf{width:34px;height:38px;flex:0 0 34px;border-radius:8px;background:#fff0f0;color:#d94b55;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:850}
+        .tf-dashboard-tender-name{color:#172033;font-size:12px;font-weight:750;overflow-wrap:anywhere}
+        .tf-dashboard-tender-meta{color:#98a2b3;font-size:10px;margin-top:4px}
+        .tf-dashboard-tender-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+        .tf-badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:9px;font-weight:850;white-space:nowrap}
+        .tf-bid{background:#eaf7ef;color:#18734b}.tf-no-bid{background:#fdeef0;color:#a43c42}.tf-review{background:#fff5e5;color:#97610b}.tf-pending{background:#eef2f6;color:#667085}
+        .tf-workflow-panel{background:linear-gradient(135deg,#fff 0%,#f7faff 100%);border:1px solid #e4ebf5;border-radius:15px;padding:19px}
+        .tf-workflow{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+        .tf-workflow-step{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e4eaf3;border-radius:11px;padding:10px 12px;min-width:130px;flex:1}
+        .tf-workflow-num{width:27px;height:27px;border-radius:8px;background:#eaf1ff;color:#2563eb;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:850;flex:0 0 27px}
+        .tf-workflow-label{color:#344054;font-size:11px;font-weight:750}
+        .tf-workflow-arrow{color:#9aa8bb;font-weight:850}
+        @media(max-width:760px){.tf-dashboard-hero-row{flex-direction:column;align-items:flex-start}.tf-dashboard-account{width:100%;max-width:none;text-align:left}.tf-dashboard-title{font-size:28px!important}.tf-workflow-arrow{display:none}.tf-workflow-step{min-width:44%;}}
+        </style>
+        """, unsafe_allow_html=True)
+
+        # Welcome banner
         st.markdown(f"""
-        <section class="dashboard-hero">
-            <div class="dashboard-hero-copy">
-                <div class="dashboard-brandline"><span class="dashboard-brandmark">TF</span><b>TENDERFORGE</b></div>
-                <div class="dashboard-welcome">Welcome back, {h(user_display_name)}</div>
-                <h1>Intelligent Tender Decision Platform</h1>
-                <p>Your centralized workspace for smarter tender evaluation and bidding decisions.</p>
-            </div>
-            <div class="dashboard-account">
-                <div class="dashboard-date">{h(date.today().strftime('%A, %d %B %Y'))}</div>
-                <div class="dashboard-account-card">
-                    <div class="profile-user-avatar">{h(initials)}</div>
-                    <div>
-                    <strong>{h(active_company_name)}</strong>
-                    <span>{h(user.get('email', ''))}</span>
-                    </div>
+        <section class="tf-dashboard-hero">
+            <div class="tf-dashboard-brand"><div class="tf-dashboard-mark">TF</div><div class="tf-dashboard-brand-name">TENDERFORGE</div></div>
+            <div class="tf-dashboard-hero-row">
+                <div>
+                    <div class="tf-dashboard-welcome">Welcome back, {h(active_company_name)}</div>
+                    <h1 class="tf-dashboard-title">Intelligent Tender Decision Platform</h1>
+                    <p class="tf-dashboard-subtitle">Your centralized workspace for smarter tender evaluation and bidding decisions.</p>
+                </div>
+                <div class="tf-dashboard-account">
+                    <div class="tf-dashboard-date">{h(date.today().strftime('%A, %d %B %Y'))}</div>
+                    <div class="tf-dashboard-company"><strong>{h(active_company_name)}</strong><span>{h(user.get('email', ''))}</span></div>
                 </div>
             </div>
         </section>
         """, unsafe_allow_html=True)
 
-        pending_evaluations = max(stats["total_tenders"] - stats["analyzed_tenders"], 0)
-        deadline_items = []
-        high_risk_count = 0
-        pending_requirements = 0
-        missing_documents = 0
-        for tender_item in tenders_with_analysis:
-            if not tender_item.get("analysis_id"):
-                continue
-            analysis = get_analysis_for_tender(tender_item["id"], user_id)
-            if not analysis:
-                continue
-            tender_record = get_tender_by_id(tender_item["id"], user_id)
-            try:
-                full_data = ensure_seven_sections(
-                    analysis, tender_record.get("extracted_text", ""), profile, pdf_path=tender_record.get("filepath")
-                )
-            except Exception:
-                full_data = ensure_seven_sections(analysis, "", profile)
-            overview = full_data.get("tender_overview", {}) or {}
-            deadline_value = overview.get("deadline") if isinstance(overview, dict) else None
-            if deadline_value and str(deadline_value).upper() not in ("", "NOT FOUND", "NONE"):
-                deadline_items.append((str(deadline_value), tender_item["filename"], tender_item["id"]))
+        # Real, user-scoped portfolio metrics from the existing database helpers.
+        total_tenders = int(stats.get("total_tenders", 0) or 0)
+        analyzed_tenders = int(stats.get("analyzed_tenders", 0) or 0)
+        bid_count = int(stats.get("bid_count", 0) or 0)
+        no_bid_review_count = int(stats.get("no_bid_count", 0) or 0) + int(stats.get("review_count", 0) or 0)
 
-            risk_data = full_data.get("risk_assessment", {}) or {}
-            risks = risk_data.get("risks", []) if isinstance(risk_data, dict) else []
-            if isinstance(risks, list):
-                for risk in risks:
-                    if isinstance(risk, dict) and str(risk.get("level") or risk.get("severity") or "").lower() in ("high", "critical"):
-                        high_risk_count += 1
-
-            matrix = full_data.get("compliance_matrix", []) or []
-            if isinstance(matrix, list):
-                for requirement in matrix:
-                    if not isinstance(requirement, dict):
-                        continue
-                    status = normalize_status(requirement.get("status"))
-                    if status in ("INFORMATION REQUIRED", "UNRESOLVED", "CONFIRMED GAP"):
-                        pending_requirements += 1
-                    if requirement.get("document_checklist_item") and status != "SATISFIED":
-                        missing_documents += 1
-
-        parsed_deadlines = []
-        for raw_deadline, filename, tender_id in deadline_items:
-            match = re.search(r"\b(?:\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|(?:\d{1,2}\s+[A-Za-z]+\s+\d{4})|\d{4}[/-]\d{1,2}[/-]\d{1,2})\b", raw_deadline)
-            if not match:
-                continue
-            text = match.group(0).strip()
-            parsed = None
-            for fmt in ("%d %B %Y", "%d %b %Y", "%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%d-%m-%Y", "%m-%d-%Y", "%Y/%m/%d"):
-                try:
-                    parsed = datetime.strptime(text, fmt)
-                    break
-                except Exception:
-                    continue
-            if parsed and parsed.date() - date.today() >= timedelta(0):
-                parsed_deadlines.append((parsed.date(), (parsed.date() - date.today()).days, filename, tender_id, raw_deadline))
-        parsed_deadlines.sort(key=lambda item: item[0])
-
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.markdown(f"""
-            <div class="dashboard-kpi">
-                <div class="dashboard-kpi-top"><span>Total Tenders</span><div style="background:#eff6ff;color:#2563eb;">📁</div></div>
-                <div class="dashboard-kpi-value">{stats['total_tenders']}</div>
-                <div class="dashboard-kpi-sub">Catalogued in your workspace</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with col2:
-            coverage = int((stats['analyzed_tenders']/stats['total_tenders']*100) if stats['total_tenders'] > 0 else 0)
-            st.markdown(f"""
-            <div class="dashboard-kpi">
-                <div class="dashboard-kpi-top"><span>Analysed Tenders</span><div style="background:#f0fdf4;color:#16805a;">✓</div></div>
-                <div class="dashboard-kpi-value">{stats['analyzed_tenders']}</div>
-                <div class="dashboard-kpi-sub">{coverage}% portfolio coverage</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with col3:
-            st.markdown(f"""
-            <div class="dashboard-kpi">
-                <div class="dashboard-kpi-top"><span>Pending Evaluations</span><div style="background:#fff7ed;color:#c77810;">⏳</div></div>
-                <div class="dashboard-kpi-value">{pending_evaluations}</div>
-                <div class="dashboard-kpi-sub">Tenders awaiting analysis</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with col4:
-            st.markdown(f"""
-            <div class="dashboard-kpi">
-                <div class="dashboard-kpi-top"><span>Upcoming Deadlines</span><div style="background:#eef4fb;color:#315f94;">◷</div></div>
-                <div class="dashboard-kpi-value">{len(parsed_deadlines)}</div>
-                <div class="dashboard-kpi-sub">Saved submission deadlines</div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        total_recommendations = stats["bid_count"] + stats["no_bid_count"] + stats["review_count"]
-        overview_col, deadline_col = st.columns([1.45, 1], gap="large")
-        with overview_col:
-            st.markdown('<div class="dashboard-section-heading"><div><span>DECISION PORTFOLIO</span><h2>Bid Recommendation Overview</h2></div></div>', unsafe_allow_html=True)
-            st.markdown('<div class="dashboard-recommendation-card">', unsafe_allow_html=True)
-            for label, count, color in (
-                ("Bid", stats["bid_count"], "#18734b"),
-                ("No-Bid", stats["no_bid_count"], "#a43c42"),
-                ("Further Review", stats["review_count"], "#97610b"),
-            ):
-                percent = int(count / total_recommendations * 100) if total_recommendations else 0
-                st.markdown(f"""
-                <div class="recommendation-row">
-                    <div class="recommendation-row-head"><span><b style="color:{color};">{h(label)}</b><small>{count} tender(s)</small></span><strong>{percent}%</strong></div>
-                    <div class="recommendation-track"><span style="width:{percent}%;background:{color};"></span></div>
-                </div>
-                """, unsafe_allow_html=True)
-            if total_recommendations == 0:
-                st.caption("No saved bid recommendations are available yet.")
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        with deadline_col:
-            st.markdown('<div class="dashboard-section-heading"><div><span>NEXT SUBMISSIONS</span><h2>Upcoming Deadlines</h2></div></div>', unsafe_allow_html=True)
-            st.markdown('<div class="dashboard-deadline-card">', unsafe_allow_html=True)
-            if parsed_deadlines:
-                for deadline_date, remaining, filename, tender_id, raw_deadline in parsed_deadlines[:4]:
-                    status_class = "deadline-urgent" if remaining <= 7 else ("deadline-soon" if remaining <= 30 else "deadline-normal")
-                    status_text = "Due today" if remaining == 0 else f"{remaining} days remaining"
-                    st.markdown(f"""
-                    <div class="deadline-row">
-                        <div class="deadline-date"><strong>{deadline_date.strftime('%d')}</strong><span>{deadline_date.strftime('%b')}</span></div>
-                        <div class="deadline-copy"><strong>{h(filename)}</strong><span>{h(raw_deadline)}</span></div>
-                        <span class="{status_class}">{status_text}</span>
-                    </div>
-                    """, unsafe_allow_html=True)
-            else:
-                st.markdown('<div class="dashboard-empty">No upcoming deadlines found in saved tender analysis.</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        st.markdown('<div class="dashboard-section-heading dashboard-section-spaced"><div><span>PORTFOLIO ACTIVITY</span><h2>Recent Tender Activity</h2></div></div>', unsafe_allow_html=True)
-        st.markdown('<div class="dashboard-table-card">', unsafe_allow_html=True)
-        if tenders_with_analysis:
-            st.markdown('<div class="dashboard-table-head"><span>Tender</span><span>Tender ID</span><span>Extraction</span><span>Recommendation</span><span>Action</span></div>', unsafe_allow_html=True)
-            for tender_item in tenders_with_analysis[:6]:
-                recommendation = tender_item.get("recommendation")
-                if recommendation == "BID":
-                    recommendation_html = "<span class='badge-bid'>BID</span>"
-                elif recommendation == "NO-BID":
-                    recommendation_html = "<span class='badge-nobid'>NO-BID</span>"
-                elif recommendation and "REVIEW" in str(recommendation).upper():
-                    recommendation_html = "<span class='badge-review'>FURTHER REVIEW</span>"
-                else:
-                    recommendation_html = "<span class='badge-pending'>NOT ANALYZED</span>"
-                if tender_item["upload_status"] == "success":
-                    status_html = "<span class='pill-satisfied'>✓ TEXT EXTRACTED</span>"
-                elif tender_item["upload_status"] == "no_text":
-                    status_html = "<span class='pill-unclear'>SCANNED / NO TEXT</span>"
-                else:
-                    status_html = "<span class='pill-notsatisfied'>EXTRACTION ERROR</span>"
-                uploaded = str(tender_item["uploaded_at"])[:16].replace("T", " ")
-                st.markdown(f"""
-                <div class="dashboard-table-row">
-                    <div class="dashboard-tender-name"><strong>{h(tender_item['filename'])}</strong><span>Uploaded {h(uploaded)}</span></div>
-                    <div class="dashboard-tender-id">TF-{int(tender_item['id']):06d}</div>
-                    <div>{status_html}</div><div>{recommendation_html}</div>
-                    <div></div>
-                </div>
-                """, unsafe_allow_html=True)
-                if st.button("Open Tender", key=f"dash_btn_{tender_item['id']}"):
-                    st.session_state["selected_tender_id"] = tender_item["id"]
-                    st.session_state["current_page"] = "🎯 Tender Analysis"
-                    st.rerun()
-        else:
-            st.markdown('<div class="dashboard-empty">No tender activity is available yet.</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        st.markdown('<div class="dashboard-section-heading dashboard-section-spaced"><div><span>ATTENTION CENTER</span><h2>Risk & Evaluation Insights</h2></div></div>', unsafe_allow_html=True)
-        insight_cards = [
-            ("High-risk tenders", high_risk_count, "Saved high or critical risk findings", "⚠"),
-            ("Pending requirements", pending_requirements, "Requirements needing information or review", "◎"),
-            ("Missing documentation", missing_documents, "Checklist items not marked satisfied", "▣"),
-            ("Further evaluation", stats["review_count"], "Analyses with review recommendation", "↻"),
+        st.markdown("<div class='tf-dashboard-section'><h3>Workspace Overview</h3><p>A clear snapshot of your tender portfolio and evaluation progress.</p></div>", unsafe_allow_html=True)
+        kpi_cols = st.columns(4, gap="medium")
+        kpis = [
+            ("Total Tenders", total_tenders, "Documents in your workspace", "#94a3b8"),
+            ("Analyzed Tenders", analyzed_tenders, "Saved tender evaluations", "#3478f6"),
+            ("Bid Decisions", bid_count, "Recommended for bidding", "#16a36a"),
+            ("No-Bid / Review", no_bid_review_count, "No-Bid or further review", "#e39a2b"),
         ]
-        insight_cols = st.columns(4)
-        for container, (label, value, sub, icon) in zip(insight_cols, insight_cards):
-            with container:
-                st.markdown(f"""
-                <div class="insight-card">
-                    <div class="insight-icon">{icon}</div>
-                    <div><span>{h(label)}</span><strong>{value}</strong><small>{h(sub)}</small></div>
-                </div>
-                """, unsafe_allow_html=True)
+        for col, (label, value, note, accent) in zip(kpi_cols, kpis):
+            with col:
+                st.markdown(f"<div class='tf-dashboard-kpi' style='--kpi-accent:{accent}'><div class='tf-dashboard-kpi-label'>{h(label)}</div><div class='tf-dashboard-kpi-value'>{value}</div><div class='tf-dashboard-kpi-note'>{h(note)}</div></div>", unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div class='tf-dashboard-section'><h3>Quick Navigation</h3><p>Move directly to the key areas of your tender intelligence workspace.</p></div>", unsafe_allow_html=True)
+        nav_cols = st.columns(3, gap="medium")
+        nav_cards = [
+            ("📁", "Upload & Repository", "Upload tender PDFs, review extracted content and manage your document repository.", "Go to My Tenders →", "📁 My Tenders", "tf_dash_nav_tenders"),
+            ("🏢", "Company Profile", "Maintain your company capabilities and evidence used during tender evaluation.", "Edit Company Profile →", "🏢 Company Profile", "tf_dash_nav_profile"),
+            ("🎯", "Evidence-Based Analysis", "Review eligibility, clause-level compliance, risks and grounded recommendations.", "Open Tender Analysis →", "🎯 Tender Analysis", "tf_dash_nav_analysis"),
+        ]
+        for col, (icon, title, desc, button_label, page, key) in zip(nav_cols, nav_cards):
+            with col:
+                st.markdown(f"<div class='tf-dashboard-nav-card'><div class='tf-dashboard-nav-title'>{icon} &nbsp; {h(title)}</div><div class='tf-dashboard-nav-desc'>{h(desc)}</div></div>", unsafe_allow_html=True)
+                if st.button(button_label, key=key, use_container_width=True):
+                    st.session_state["current_page"] = page
+                    st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        recent_head, recent_link = st.columns([4, 1])
+        with recent_head:
+            st.markdown("<div class='tf-dashboard-section'><h3>Recent Tender Documents</h3><p>Your latest uploaded tenders, extraction status and current recommendation.</p></div>", unsafe_allow_html=True)
+        with recent_link:
+            if st.button("View All →", key="tf_dash_recent_view_all", use_container_width=True):
+                st.session_state["current_page"] = "📁 My Tenders"
+                st.rerun()
+
+        with st.container(border=True):
+            if tenders_with_analysis:
+                for tender_item in tenders_with_analysis[:5]:
+                    recommendation = str(tender_item.get("recommendation") or "").upper().strip()
+                    if recommendation == "BID":
+                        badge = '<span class="tf-badge tf-bid">BID</span>'
+                    elif recommendation == "NO-BID":
+                        badge = '<span class="tf-badge tf-no-bid">NO-BID</span>'
+                    elif "REVIEW" in recommendation:
+                        badge = '<span class="tf-badge tf-review">FURTHER REVIEW</span>'
+                    else:
+                        badge = '<span class="tf-badge tf-pending">PENDING</span>'
+
+                    upload_status = str(tender_item.get("upload_status") or "").lower()
+                    if upload_status == "success":
+                        extraction_label = "Text extracted"
+                    elif upload_status:
+                        extraction_label = upload_status.replace("_", " ").title()
+                    else:
+                        extraction_label = "Status unavailable"
+                    uploaded_at = str(tender_item.get("uploaded_at") or "")
+                    tender_id = tender_item.get("id")
+                    row_left, row_right = st.columns([4, 1.5], vertical_alignment="center")
+                    with row_left:
+                        st.markdown(f"<div class='tf-dashboard-tender'><div class='tf-dashboard-tender-main'><div class='tf-dashboard-pdf'>PDF</div><div><div class='tf-dashboard-tender-name'>{h(tender_item.get('filename', 'Untitled tender'))}</div><div class='tf-dashboard-tender-meta'>{h(extraction_label)}" + (f" · Uploaded {h(uploaded_at)}" if uploaded_at else "") + f"</div></div></div><div class='tf-dashboard-tender-right'>{badge}</div></div>", unsafe_allow_html=True)
+                    with row_right:
+                        if st.button("Open Tender", key=f"tf_dash_open_{tender_id}", use_container_width=True):
+                            st.session_state["selected_tender_id"] = tender_id
+                            st.session_state["current_page"] = "🎯 Tender Analysis"
+                            st.rerun()
+            else:
+                st.markdown("<div style='padding:24px 8px;text-align:center;color:#667085'><strong>No tender documents yet</strong><br><span style='font-size:12px'>Upload your first tender to begin evidence-based evaluation.</span></div>", unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("<div class='tf-dashboard-section'><h3>How TenderForge Works</h3><p>From tender document upload to an evidence-grounded bidding recommendation.</p></div>", unsafe_allow_html=True)
+        st.markdown("""
+        <div class="tf-workflow-panel"><div class="tf-workflow">
+            <div class="tf-workflow-step"><div class="tf-workflow-num">01</div><div class="tf-workflow-label">Upload Tender</div></div><div class="tf-workflow-arrow">→</div>
+            <div class="tf-workflow-step"><div class="tf-workflow-num">02</div><div class="tf-workflow-label">Extract Details</div></div><div class="tf-workflow-arrow">→</div>
+            <div class="tf-workflow-step"><div class="tf-workflow-num">03</div><div class="tf-workflow-label">Match Profile</div></div><div class="tf-workflow-arrow">→</div>
+            <div class="tf-workflow-step"><div class="tf-workflow-num">04</div><div class="tf-workflow-label">Evaluate Risks</div></div><div class="tf-workflow-arrow">→</div>
+            <div class="tf-workflow-step"><div class="tf-workflow-num">05</div><div class="tf-workflow-label">Get Recommendation</div></div>
+        </div></div>
+        """, unsafe_allow_html=True)
 
     # ------------------------------------------------------------
     # PAGE 2: 🏢 Company Profile
@@ -2105,21 +2051,10 @@ def render_authenticated_workspace(user: dict):
                 st.stop()
 
             profile = get_company_profile(user_id) or {}
-            combined_evidence = db.get_combined_company_and_tender_evidence(user_id, selected_id)
-            current_profile_hash = compute_combined_evidence_hash(profile, combined_evidence)
+            # This codebase stores a single latest analysis per tender. Use the
+            # existing profile-hash API instead of calling unavailable version/evidence APIs.
+            current_profile_hash = compute_profile_hash(profile)
             saved_analysis = get_analysis_for_tender(selected_id, user_id)
-            versions = get_tender_analysis_versions(selected_id, user_id)
-            version_key = f"selected_analysis_ver_{selected_id}"
-            latest_analysis_id = versions[0]["id"] if versions else None
-
-            current_choice_id = st.session_state.get(version_key, latest_analysis_id)
-            valid_ids = [v["id"] for v in versions]
-            if current_choice_id not in valid_ids:
-                current_choice_id = latest_analysis_id
-                st.session_state[version_key] = latest_analysis_id
-
-            if current_choice_id and current_choice_id != latest_analysis_id:
-                saved_analysis = get_tender_analysis_by_id(current_choice_id, user_id)
 
             # Header Bar
             st.markdown(f"""
@@ -2130,38 +2065,6 @@ def render_authenticated_workspace(user: dict):
                 </div>
             </div>
             """, unsafe_allow_html=True)
-
-            if versions and len(versions) > 1:
-                v_col1, v_col2 = st.columns([3, 2])
-                with v_col1:
-                    v_options = []
-                    for v in versions:
-                        v_num = v.get("version", 1)
-                        is_lat = (v["id"] == latest_analysis_id)
-                        v_time = str(v.get("analyzed_at") or "")[:16]
-                        v_rec = v.get("recommendation", "")
-                        lbl = f"Version {v_num}{' (Latest)' if is_lat else ''} · {v_time} · [{v_rec}]"
-                        v_options.append((v["id"], lbl))
-
-                    cur_idx = next((i for i, opt in enumerate(v_options) if opt[0] == current_choice_id), 0)
-                    sel_opt = st.selectbox(
-                        "📜 Historical Analysis Version",
-                        v_options,
-                        index=cur_idx,
-                        format_func=lambda x: x[1],
-                        key=f"ver_sel_widget_{selected_id}"
-                    )
-                    if sel_opt and sel_opt[0] != st.session_state.get(version_key):
-                        st.session_state[version_key] = sel_opt[0]
-                        st.rerun()
-                with v_col2:
-                    if current_choice_id != latest_analysis_id:
-                        st.warning(f"Viewing historical Version {saved_analysis.get('version', 1)}. Latest is preserved.")
-                        if st.button("Switch to Latest Version ⚡", key=f"switch_latest_{selected_id}"):
-                            st.session_state[version_key] = latest_analysis_id
-                            st.rerun()
-                    else:
-                        st.caption(f"Showing Latest Version {versions[0].get('version', 1)} ({len(versions)} versions archived).")
 
             # Duplicate AI processing prevention check
             profile_changed = (current_profile_hash != (saved_analysis or {}).get("profile_hash"))
